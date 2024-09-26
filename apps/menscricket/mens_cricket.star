@@ -27,7 +27,7 @@ DEFAULT_SCREEN = render.Root(
 
 # Config
 DEFAULT_TIMEZONE = "America/New_York"
-DEFAULT_TEAM_ID = "8"
+DEFAULT_TEAM_ID = "40"
 DEFAULT_PAST_RESULT_DAYS = 5
 ALWAYS_SHOW_FIXTURES_SCHEMA_KEY = "Always"
 
@@ -769,7 +769,7 @@ team_netherlands = struct(**_team_setting("15", "15", "Netherlands", "NED", "#FF
 team_bangladesh = struct(**_team_setting("25", "25", "Bangladesh", "BAN", "#F42A41", "#006A4E"))
 team_ireland = struct(**_team_setting("29", "29", "Ireland", "IRE", "#169B62", "#FF883E"))
 team_scotland = struct(**_team_setting("30", "30", "Scotland", "SCO", "#FFFFFF", "#005EB8"))
-team_afghanistan = struct(**_team_setting("40", "40", "Afghanistan", "AFG", "#007A36", "#D32011"))
+team_afghanistan = struct(**_team_setting("40", "40", "Afghanistan", "AFG", "#D32011", BLACK_COLOR))
 
 team_settings_by_id = {
     ts.id: ts
