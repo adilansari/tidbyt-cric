@@ -27,7 +27,7 @@ DEFAULT_SCREEN = render.Root(
 
 # Config
 DEFAULT_TIMEZONE = "America/New_York"
-DEFAULT_TEAM_ID = "40"
+DEFAULT_TEAM_ID = "6"
 DEFAULT_PAST_RESULT_DAYS = 5
 ALWAYS_SHOW_FIXTURES_SCHEMA_KEY = "Always"
 
@@ -112,7 +112,7 @@ def render_current_match(match_data, tz):
         return render_current_limited_ov_match(match_data)
 
 def render_current_test_match(match_data):
-    live_inning = match_data["match"]["liveInning"]
+    live_inning = match_data["match"].get("liveInning", 0) or 0
     team_1_id, team_2_id = "", ""
     team_1_abbr, team_2_abbr = "", ""
     team_1_score, team_1_wickets, team_1_overs = 0, 0, 0
@@ -152,9 +152,25 @@ def render_current_test_match(match_data):
     if match_data["match"]["liveOversPending"] and int(match_data["match"]["liveOversPending"]) > 0:
         statuses[1] = "Overs Rem: {}".format(match_data["match"]["liveOversPending"])
     match_status = match_data["match"]["status"]
+    status_data = match_data["match"]["statusData"]["statusTextLangData"]
     if "stumps" in match_status.lower():
-        status_data = match_data["match"]["statusData"]["statusTextLangData"]
         match_status = "Stumps - Day {}".format(status_data["day"])
+    elif "live" in match_status.lower():
+        match_status = "Live - Day {}".format(status_data["day"])
+    elif "innings break" in match_status.lower():
+        match_status = "Innings Break"
+    elif "lunch" in match_status.lower():
+        match_status = "Lunch - Day {}".format(status_data["day"])
+    elif "tea" in match_status.lower():
+        match_status = "Tea - Day {}".format(status_data["day"])
+    elif "dinner" in match_status.lower():
+        match_status = "Dinner - Day {}".format(status_data["day"])
+    elif "close" in match_status.lower():
+        match_status = "Close - Day {}".format(status_data["day"])
+    elif "day" in match_status.lower():
+        match_status = "Day {}".format(status_data["day"])
+    else:
+        match_status = "Day {}".format(status_data["day"])
 
     # fill remaining status rows
     for i in range(len(statuses)):
